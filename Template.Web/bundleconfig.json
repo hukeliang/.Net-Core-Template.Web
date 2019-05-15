@@ -1,0 +1,21 @@
+﻿[
+  {
+    "outputFileName": "wwwroot/css/StyleSheet.min.css",
+    "inputFiles": [
+      "wwwroot/css/StyleSheet.css",
+      "wwwroot/css/StyleSheet1.css"
+    ]
+  },
+
+  {
+    "outputFileName": "wwwroot/js/site/bundle.min.js",
+    "inputFiles": [
+      "wwwroot/js/site/bundle.js"
+    ],
+    "minify": {
+      "enabled": true,
+      "renameLocals": true
+    },
+    "sourceMap": false
+  }
+]
