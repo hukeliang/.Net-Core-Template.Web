@@ -12,24 +12,27 @@ namespace Common.Helper.Core.MiddlewareExpand.Implementation
     {
         private readonly RequestDelegate _next;
 
-        private readonly string _errorPath;
+        private readonly IViewRenderService _viewRenderService;
 
+        private readonly string _path;
+       
 
-        public NotFoundMiddleware(RequestDelegate next, string errorPath)
+        public NotFoundMiddleware(RequestDelegate next,IViewRenderService viewRenderService, string path) //在中间件中只有单例可以构造函数注入
         {
             _next = next;
-            _errorPath = errorPath;
+            _viewRenderService = viewRenderService;
+            _path = path;
         }
 
-        public async Task Invoke(HttpContext context, IViewRenderService viewRenderService)//在中间件中只有单例可以构造函数注入所以这里采用方法注入
+        public async Task Invoke(HttpContext context)
         {
             HttpResponse httpResponse = context.Response;
 
             if (StatusCodes.Status404NotFound.Equals(httpResponse.StatusCode) && !httpResponse.HasStarted)
             {
-                string htmlString = await viewRenderService.RenderAsync(_errorPath);
+                string html = await _viewRenderService.RenderAsync(_path);
 
-                await httpResponse.WriteAsync(htmlString);
+                await httpResponse.WriteAsync(html);
             }
 
             await _next.Invoke(context);

@@ -10,13 +10,15 @@ namespace Common.Helper.Core.MiddlewareExpand.Implementation
     {
         private readonly RequestDelegate _next;
         private readonly ILogger _logger;
-        private readonly string _errorPath;
+        private readonly IViewRenderService _viewRenderService;
+        private readonly string _path;
 
-        public InternalServerErrorMiddleware(RequestDelegate next, ILoggerFactory loggerFactory, string errorPath)
+        public InternalServerErrorMiddleware(RequestDelegate next, ILoggerFactory loggerFactory, IViewRenderService viewRenderService, string path)
         {
             _next = next;
             _logger = loggerFactory.CreateLogger<InternalServerErrorMiddleware>();
-            _errorPath = errorPath;
+            _viewRenderService = viewRenderService;
+            _path = path;
         }
 
         public async Task Invoke(HttpContext context, IViewRenderService viewRenderService)
@@ -39,7 +41,7 @@ namespace Common.Helper.Core.MiddlewareExpand.Implementation
                     throw;
                 }
 
-                string htmlString = await viewRenderService.RenderAsync(_errorPath);
+                string htmlString = await viewRenderService.RenderAsync(_path);
 
                 await response.WriteAsync(htmlString);
 
