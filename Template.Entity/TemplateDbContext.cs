@@ -1,8 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Diagnostics;
-using System;
-using System.Collections.Generic;
-using Template.Model;
 using Template.Model.TemplateModels;
 
 namespace Template.Entity
@@ -10,13 +6,14 @@ namespace Template.Entity
     /// <summary>
     /// 数据库上下文
     /// </summary>
-    public sealed class TemplateDbContext : DbContext
-
+    public  class TemplateDbContext : DbContext
     {
         public TemplateDbContext(DbContextOptions<TemplateDbContext> options) : base(options)
         {
-
+            //数据读写分离合理做法
+            //创建一个只读上下文 重写SaveChanges
         }
+
         
 
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -37,4 +34,6 @@ namespace Template.Entity
         public DbSet<UserPermissions> UserPermissions { get; set; }
 
     }
+
+    
 }
