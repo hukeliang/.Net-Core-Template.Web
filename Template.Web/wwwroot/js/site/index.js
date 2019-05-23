@@ -1,0 +1,1 @@
+﻿$('#btn1').trigger('click');  //触发click事件
