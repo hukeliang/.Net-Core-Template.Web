@@ -44,7 +44,7 @@ namespace Template.Web
                 options.MultipartBodyLengthLimit = int.Parse(Configuration["MultipartBodyLengthLimit"]) * 1024 * 1024;
             });
 
-            services.AddMvc().AddJsonOptions().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
 
             #region 注册其他服务
